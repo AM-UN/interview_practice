@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+{% extends "base.html" %}
+{% block content %}
+<body>
+  <div class="text-center">
+    <img src="../img/interviewers.png">
+    <p class="h2">
+      {% if length != 0 %}
+      {{ content }}
+      {% else %}
+        <div id="content" class="h2">{{ content }}</div>
+      {% endif %}
+    </p>
+    <div id="remain" class="h2">残り30秒</div>
+    
+    <script>
+      var count = 29;
+      var countdownid = setInterval(function(){
+                  remain.innerHTML="残り"+count+"秒";
+                  count --;
+      if(count<-1){
+          clearInterval(countdownid);
+          remain.innerHTML="";
+          content.innerHTML="お疲れ様でした";
+          }
+      } ,1000);
+    </script>
+  
+    {% if length == 0 %}
+      <form action="/revival" method="post" class="form-inline">
+        <button type="submit" class="btn btn-outline-primary">終了</button>
+      </form>
+    {% else %}
+      <form action="/next" method="post" class="form-inline">
+        <button type="submit" class="btn btn-outline-danger">次の質問へ</button>
+      </form>
+    {% endif %}
+  </div>
+</body>
+{% endblock %}
+</html>
